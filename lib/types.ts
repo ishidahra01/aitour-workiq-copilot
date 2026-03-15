@@ -39,19 +39,19 @@ export type SiteProject = {
     issue: string;
     nextAction: string;
   };
-  municipalityConstraints: {
+  municipalityConstraints?: {
     heightLimitMeters: number;
     colorRestriction: string;
     residentMeetingStatus: string;
     municipalityApprovalStatus: string;
   };
-  rfDesignConstraints: {
+  rfDesignConstraints?: {
     requiredAntennaHeightMeters: number;
     coverageAtAllowedHeightPercent: number;
     targetCoveragePercent: number;
     alternativeDesign: string;
     designStatus: string;
   };
-  openIssues: OpenIssue[];
-  approvals: Approval[];
+  openIssues?: OpenIssue[];
+  approvals?: Approval[];
 };

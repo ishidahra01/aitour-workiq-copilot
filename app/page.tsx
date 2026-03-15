@@ -26,7 +26,7 @@ export default function HomePage() {
   ).length;
   const pendingIssues = siteProjects.reduce(
     (sum, p) =>
-      sum + p.openIssues.filter((i) => i.status !== "Resolved").length,
+      sum + (p.openIssues ?? []).filter((i) => i.status !== "Resolved").length,
     0
   );
   const inProgressCount = siteProjects.filter(
@@ -107,7 +107,7 @@ export default function HomePage() {
             </thead>
             <tbody className="divide-y divide-slate-100">
               {siteProjects.map((project) => {
-                const openIssueCount = project.openIssues.filter(
+                const openIssueCount = (project.openIssues ?? []).filter(
                   (i) => i.status !== "Resolved"
                 ).length;
                 return (
