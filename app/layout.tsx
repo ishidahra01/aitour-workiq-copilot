@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Sidebar from "@/components/Sidebar";
+import { User } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "5G基地局設置計画管理 | WorkIQ Site Manager",
@@ -13,35 +15,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className="antialiased bg-slate-50">
-        <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
-              <svg
-                className="w-4 h-4 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 20l-5.447-4.724A1 1 0 013 14.382V5a2 2 0 012-2h14a2 2 0 012 2v9.382a1 1 0 01-.553.894L15 20M9 20v-6a2 2 0 012-2h2a2 2 0 012 2v6M9 20h6"
-                />
-              </svg>
-            </div>
-            <div>
-              <span className="text-base font-semibold text-slate-900">
-                WorkIQ Site Manager
-              </span>
-              <span className="ml-2 text-xs text-slate-400 hidden sm:inline">
-                5G基地局設置計画管理
-              </span>
-            </div>
+      <body className="antialiased bg-gray-100">
+        <div className="flex h-screen overflow-hidden">
+          <Sidebar />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Top bar */}
+            <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between shrink-0">
+              <p className="text-sm text-gray-500">5G基地局設置計画管理システム</p>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                  <User className="w-4 h-4" />
+                </span>
+                <span className="text-xs font-medium">管理者</span>
+              </div>
+            </header>
+            {/* Page content */}
+            <main className="flex-1 overflow-auto p-6">{children}</main>
           </div>
-        </header>
-        <main className="max-w-7xl mx-auto px-6 py-8">{children}</main>
+        </div>
       </body>
     </html>
   );

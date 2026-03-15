@@ -19,6 +19,57 @@ export const siteProjects: SiteProject[] = [
       nextAction:
         "関係者との情報整理後、次のアクションを決定する。",
     },
+    municipalityConstraints: {
+      heightLimitMeters: 20,
+      colorRestriction: "確認中",
+      residentMeetingStatus: "未実施（調整中）",
+      municipalityApprovalStatus: "協議中",
+    },
+    rfDesignConstraints: {
+      requiredAntennaHeightMeters: 20,
+      coverageAtAllowedHeightPercent: 85,
+      targetCoveragePercent: 95,
+      alternativeDesign: "検討中",
+      designStatus: "精査中",
+    },
+    openIssues: [
+      {
+        id: "issue-a-1",
+        title: "コスト見積もりの精査",
+        severity: "Medium",
+        status: "In Review",
+        owner: "中村さん",
+        note: "設計確定後に再見積もりが必要。コスト超過リスクを検討中。",
+      },
+      {
+        id: "issue-a-2",
+        title: "自治体との制約事項の確認",
+        severity: "Medium",
+        status: "Open",
+        owner: "中村さん",
+        note: "一部制約事項の詳細が未確認。自治体との協議を継続中。",
+      },
+    ],
+    approvals: [
+      {
+        id: "approval-a-1",
+        role: "自治体要件確認",
+        approver: "中村さん",
+        status: "Pending",
+      },
+      {
+        id: "approval-a-2",
+        role: "設計要件確認",
+        approver: "中村さん",
+        status: "Pending",
+      },
+      {
+        id: "approval-a-3",
+        role: "コスト判断",
+        approver: "PM",
+        status: "Pending",
+      },
+    ],
   },
   {
     id: "site-b",
