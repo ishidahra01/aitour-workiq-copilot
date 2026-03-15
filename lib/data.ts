@@ -11,73 +11,14 @@ export const siteProjects: SiteProject[] = [
     lastUpdated: "2026-03-12",
     summary: {
       municipality:
-        "高さ制限15m・景観色指定あり。住民説明会は完了済み。自治体との協議は継続中。",
+        "自治体との協議を進めている。一部制約事項あり、詳細確認中。",
       design:
-        "必要アンテナ高20mに対し、制限15mでカバレッジ85%（目標95%未達）。スモールセル2基追加で代替可能。",
+        "RF設計条件を精査中。制約への対応方針は検討段階。",
       issue:
-        "スモールセル追加に伴うコスト増（推定+¥8M）の承認が未了。PM判断待ち。",
+        "コストおよび設計に関する未解決論点が残っている。",
       nextAction:
-        "コスト承認後、自治体に最終設計を提出し、Approval Pendingへ移行する。",
+        "関係者との情報整理後、次のアクションを決定する。",
     },
-    municipalityConstraints: {
-      heightLimitMeters: 15,
-      colorRestriction: "景観条例により外装色はグレー系指定",
-      residentMeetingStatus: "実施済み（2026-02-20）",
-      municipalityApprovalStatus: "条件付き承認（高さ・色の遵守が条件）",
-    },
-    rfDesignConstraints: {
-      requiredAntennaHeightMeters: 20,
-      coverageAtAllowedHeightPercent: 85,
-      targetCoveragePercent: 95,
-      alternativeDesign: "スモールセル2基追加設置（エリア北東・南西に配置）",
-      designStatus: "代替案検討中",
-    },
-    openIssues: [
-      {
-        id: "issue-a-1",
-        title: "スモールセル追加コストの承認未了",
-        severity: "High",
-        status: "In Review",
-        owner: "PM（中村さん）",
-        note: "追加コスト約¥8Mに対するPM承認が必要。コスト試算は完了済み。",
-      },
-      {
-        id: "issue-a-2",
-        title: "高さ制限15mと必要アンテナ高20mのギャップ",
-        severity: "High",
-        status: "Open",
-        owner: "鈴木さん（設計）",
-        note: "15m設置時のカバレッジ不足（85%）を代替設計でカバーする方針で検討中。",
-      },
-      {
-        id: "issue-a-3",
-        title: "景観色指定への設計対応",
-        severity: "Medium",
-        status: "Open",
-        owner: "設計チーム",
-        note: "グレー系への外装変更が必要。コスト微増の可能性あり。",
-      },
-    ],
-    approvals: [
-      {
-        id: "approval-a-1",
-        role: "自治体要件確認",
-        approver: "中村さん",
-        status: "Pending",
-      },
-      {
-        id: "approval-a-2",
-        role: "設計要件確認",
-        approver: "鈴木さん",
-        status: "Pending",
-      },
-      {
-        id: "approval-a-3",
-        role: "コスト判断",
-        approver: "PM",
-        status: "Pending",
-      },
-    ],
   },
   {
     id: "site-b",

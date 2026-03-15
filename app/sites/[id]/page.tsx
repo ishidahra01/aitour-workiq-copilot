@@ -32,7 +32,7 @@ export default async function SiteDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const openIssueCount = project.openIssues.filter(
+  const openIssueCount = (project.openIssues ?? []).filter(
     (i) => i.status !== "Resolved"
   ).length;
 
@@ -132,163 +132,173 @@ export default async function SiteDetailPage({ params }: PageProps) {
       </div>
 
       {/* Main content grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* Municipality Constraints */}
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-slate-500" />
-            <h2 className="text-sm font-semibold text-slate-700">
-              自治体制約
-            </h2>
-          </div>
-          <div className="p-6">
-            <dl className="space-y-4">
-              <ConstraintRow
-                label="高さ制限"
-                value={`${project.municipalityConstraints.heightLimitMeters}m`}
-                highlight={
-                  project.municipalityConstraints.heightLimitMeters <
-                  project.rfDesignConstraints.requiredAntennaHeightMeters
-                }
-              />
-              <ConstraintRow
-                label="景観条例"
-                value={project.municipalityConstraints.colorRestriction}
-              />
-              <ConstraintRow
-                label="住民説明会"
-                value={project.municipalityConstraints.residentMeetingStatus}
-              />
-              <ConstraintRow
-                label="自治体承認状況"
-                value={
-                  project.municipalityConstraints.municipalityApprovalStatus
-                }
-              />
-            </dl>
-          </div>
-        </div>
+      {(project.municipalityConstraints ?? project.rfDesignConstraints) && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* Municipality Constraints */}
+          {project.municipalityConstraints && (
+            <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-slate-500" />
+                <h2 className="text-sm font-semibold text-slate-700">
+                  自治体制約
+                </h2>
+              </div>
+              <div className="p-6">
+                <dl className="space-y-4">
+                  <ConstraintRow
+                    label="高さ制限"
+                    value={`${project.municipalityConstraints.heightLimitMeters}m`}
+                    highlight={
+                      project.municipalityConstraints.heightLimitMeters <
+                      (project.rfDesignConstraints?.requiredAntennaHeightMeters ?? Infinity)
+                    }
+                  />
+                  <ConstraintRow
+                    label="景観条例"
+                    value={project.municipalityConstraints.colorRestriction}
+                  />
+                  <ConstraintRow
+                    label="住民説明会"
+                    value={project.municipalityConstraints.residentMeetingStatus}
+                  />
+                  <ConstraintRow
+                    label="自治体承認状況"
+                    value={
+                      project.municipalityConstraints.municipalityApprovalStatus
+                    }
+                  />
+                </dl>
+              </div>
+            </div>
+          )}
 
-        {/* RF / Design Constraints */}
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-2">
-            <Radio className="w-4 h-4 text-slate-500" />
-            <h2 className="text-sm font-semibold text-slate-700">
-              RF / 設計制約
-            </h2>
-          </div>
-          <div className="p-6">
-            <dl className="space-y-4">
-              <ConstraintRow
-                label="必要アンテナ高"
-                value={`${project.rfDesignConstraints.requiredAntennaHeightMeters}m`}
-                highlight={
-                  project.rfDesignConstraints.requiredAntennaHeightMeters >
-                  project.municipalityConstraints.heightLimitMeters
-                }
-              />
-              <ConstraintRow
-                label="制限高さ時のカバレッジ"
-                value={`${project.rfDesignConstraints.coverageAtAllowedHeightPercent}%`}
-                highlight={
-                  project.rfDesignConstraints.coverageAtAllowedHeightPercent <
-                  project.rfDesignConstraints.targetCoveragePercent
-                }
-              />
-              <ConstraintRow
-                label="カバレッジ基準"
-                value={`${project.rfDesignConstraints.targetCoveragePercent}%`}
-              />
-              <ConstraintRow
-                label="代替案"
-                value={project.rfDesignConstraints.alternativeDesign}
-              />
-              <ConstraintRow
-                label="設計判断ステータス"
-                value={project.rfDesignConstraints.designStatus}
-              />
-            </dl>
-          </div>
+          {/* RF / Design Constraints */}
+          {project.rfDesignConstraints && (
+            <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-2">
+                <Radio className="w-4 h-4 text-slate-500" />
+                <h2 className="text-sm font-semibold text-slate-700">
+                  RF / 設計制約
+                </h2>
+              </div>
+              <div className="p-6">
+                <dl className="space-y-4">
+                  <ConstraintRow
+                    label="必要アンテナ高"
+                    value={`${project.rfDesignConstraints.requiredAntennaHeightMeters}m`}
+                    highlight={
+                      project.rfDesignConstraints.requiredAntennaHeightMeters >
+                      (project.municipalityConstraints?.heightLimitMeters ?? 0)
+                    }
+                  />
+                  <ConstraintRow
+                    label="制限高さ時のカバレッジ"
+                    value={`${project.rfDesignConstraints.coverageAtAllowedHeightPercent}%`}
+                    highlight={
+                      project.rfDesignConstraints.coverageAtAllowedHeightPercent <
+                      project.rfDesignConstraints.targetCoveragePercent
+                    }
+                  />
+                  <ConstraintRow
+                    label="カバレッジ基準"
+                    value={`${project.rfDesignConstraints.targetCoveragePercent}%`}
+                  />
+                  <ConstraintRow
+                    label="代替案"
+                    value={project.rfDesignConstraints.alternativeDesign}
+                  />
+                  <ConstraintRow
+                    label="設計判断ステータス"
+                    value={project.rfDesignConstraints.designStatus}
+                  />
+                </dl>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      )}
 
       {/* Open Issues */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-6">
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-slate-500" />
-            <h2 className="text-sm font-semibold text-slate-700">
-              未解決論点（Open Issues）
-            </h2>
-          </div>
-          {openIssueCount > 0 && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
-              {openIssueCount}件未解決
-            </span>
-          )}
-        </div>
-        <div className="divide-y divide-slate-100">
-          {project.openIssues.length === 0 ? (
-            <div className="px-6 py-8 text-center text-slate-400 text-sm">
-              未解決論点はありません
+      {project.openIssues && (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden mb-6">
+          <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-slate-500" />
+              <h2 className="text-sm font-semibold text-slate-700">
+                未解決論点（Open Issues）
+              </h2>
             </div>
-          ) : (
-            project.openIssues.map((issue) => (
-              <div key={issue.id} className="p-6">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <SeverityBadge severity={issue.severity} />
-                      <IssueStatusBadge status={issue.status} />
-                    </div>
-                    <p className="font-medium text-slate-900 text-sm">
-                      {issue.title}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-4 text-xs text-slate-500 mb-2">
-                  <span className="flex items-center gap-1">
-                    <User className="w-3 h-3" />
-                    オーナー: {issue.owner}
-                  </span>
-                </div>
-                {issue.note && (
-                  <p className="text-xs text-slate-600 bg-slate-50 rounded-lg px-3 py-2 leading-relaxed">
-                    {issue.note}
-                  </p>
-                )}
+            {openIssueCount > 0 && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
+                {openIssueCount}件未解決
+              </span>
+            )}
+          </div>
+          <div className="divide-y divide-slate-100">
+            {project.openIssues.length === 0 ? (
+              <div className="px-6 py-8 text-center text-slate-400 text-sm">
+                未解決論点はありません
               </div>
-            ))
-          )}
+            ) : (
+              project.openIssues.map((issue) => (
+                <div key={issue.id} className="p-6">
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <SeverityBadge severity={issue.severity} />
+                        <IssueStatusBadge status={issue.status} />
+                      </div>
+                      <p className="font-medium text-slate-900 text-sm">
+                        {issue.title}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-4 text-xs text-slate-500 mb-2">
+                    <span className="flex items-center gap-1">
+                      <User className="w-3 h-3" />
+                      オーナー: {issue.owner}
+                    </span>
+                  </div>
+                  {issue.note && (
+                    <p className="text-xs text-slate-600 bg-slate-50 rounded-lg px-3 py-2 leading-relaxed">
+                      {issue.note}
+                    </p>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Approval Status */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-2">
-          <CheckSquare className="w-4 h-4 text-slate-500" />
-          <h2 className="text-sm font-semibold text-slate-700">承認状況</h2>
-        </div>
-        <div className="divide-y divide-slate-100">
-          {project.approvals.map((approval) => (
-            <div
-              key={approval.id}
-              className="px-6 py-4 flex items-center justify-between gap-4"
-            >
-              <div className="flex-1">
-                <p className="text-sm font-medium text-slate-900">
-                  {approval.role}
-                </p>
-                <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
-                  <User className="w-3 h-3" />
-                  {approval.approver}
-                </p>
+      {project.approvals && (
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-2">
+            <CheckSquare className="w-4 h-4 text-slate-500" />
+            <h2 className="text-sm font-semibold text-slate-700">承認状況</h2>
+          </div>
+          <div className="divide-y divide-slate-100">
+            {project.approvals.map((approval) => (
+              <div
+                key={approval.id}
+                className="px-6 py-4 flex items-center justify-between gap-4"
+              >
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-slate-900">
+                    {approval.role}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
+                    <User className="w-3 h-3" />
+                    {approval.approver}
+                  </p>
+                </div>
+                <ApprovalStatusBadge status={approval.status} />
               </div>
-              <ApprovalStatusBadge status={approval.status} />
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
