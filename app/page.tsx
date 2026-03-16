@@ -1,12 +1,9 @@
-import Link from "next/link";
 import { siteProjects } from "@/lib/data";
+import { SiteProjectRow } from "@/components/SiteProjectRow";
 import { StatusBadge } from "@/components/StatusBadge";
 import {
-  MapPin,
-  User,
   AlertCircle,
   Clock,
-  ChevronRight,
   CheckCircle,
   Activity,
 } from "lucide-react";
@@ -19,16 +16,23 @@ const statusOrder = [
   "Approved",
 ] as const;
 
+function hasStructuredDetails(project: (typeof siteProjects)[number]) {
+  return Boolean(
+    project.municipalityConstraints ||
+      project.rfDesignConstraints ||
+      (project.openIssues ?? []).length > 0 ||
+      (project.approvals ?? []).length > 0
+  );
+}
+
 export default function HomePage() {
   const totalProjects = siteProjects.length;
   const approvedCount = siteProjects.filter(
     (p) => p.status === "Approved"
   ).length;
-  const pendingIssues = siteProjects.reduce(
-    (sum, p) =>
-      sum + (p.openIssues ?? []).filter((i) => i.status !== "Resolved").length,
-    0
-  );
+  const detailPendingCount = siteProjects.filter(
+    (p) => !hasStructuredDetails(p)
+  ).length;
   const inProgressCount = siteProjects.filter(
     (p) => p.status !== "Approved"
   ).length;
@@ -40,7 +44,7 @@ export default function HomePage() {
         <div>
           <h1 className="text-lg font-bold text-gray-900">案件一覧</h1>
           <p className="text-sm text-gray-500 mt-0.5">
-            5G基地局設置計画 — {totalProjects}件のアクティブな案件
+            5G基地局設置候補の初期登録一覧 — {totalProjects}件
           </p>
         </div>
       </div>
@@ -79,8 +83,8 @@ export default function HomePage() {
             <AlertCircle className="w-5 h-5 text-red-600" />
           </div>
           <div>
-            <p className="text-xs text-gray-500">未解決論点</p>
-            <p className="text-xl font-bold text-red-600">{pendingIssues}</p>
+            <p className="text-xs text-gray-500">詳細未整理</p>
+            <p className="text-xl font-bold text-red-600">{detailPendingCount}</p>
           </div>
         </div>
       </div>
@@ -110,7 +114,7 @@ export default function HomePage() {
                   担当者
                 </th>
                 <th className="text-left px-5 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
-                  未解決論点
+                  情報状態
                 </th>
                 <th className="text-left px-5 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
                   最終更新
@@ -120,66 +124,13 @@ export default function HomePage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {siteProjects.map((project) => {
-                const openIssueCount = (project.openIssues ?? []).filter(
-                  (i) => i.status !== "Resolved"
-                ).length;
+                const detailsReady = hasStructuredDetails(project);
                 return (
-                  <Link
+                  <SiteProjectRow
                     key={project.id}
-                    href={`/sites/${project.id}`}
-                    legacyBehavior
-                  >
-                    <tr
-                      className="hover:bg-blue-50 transition-colors cursor-pointer"
-                      role="link"
-                    >
-                      <td className="px-5 py-3">
-                        <span className="font-semibold text-gray-900">
-                          {project.name}
-                        </span>
-                      </td>
-                      <td className="px-5 py-3">
-                        <div className="flex items-center gap-1.5 text-gray-700">
-                          <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                          <span>{project.municipality}</span>
-                        </div>
-                        <div className="text-xs text-gray-400 mt-0.5 ml-5">
-                          {project.location}
-                        </div>
-                      </td>
-                      <td className="px-5 py-3">
-                        <StatusBadge status={project.status} />
-                      </td>
-                      <td className="px-5 py-3">
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <User className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                          {project.owner}
-                        </div>
-                      </td>
-                      <td className="px-5 py-3">
-                        {openIssueCount > 0 ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
-                            <AlertCircle className="w-3 h-3" />
-                            {openIssueCount}件
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                            <CheckCircle className="w-3 h-3" />
-                            なし
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-5 py-3 text-gray-500 text-xs">
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-gray-400" />
-                          {project.lastUpdated}
-                        </div>
-                      </td>
-                      <td className="px-5 py-3">
-                        <ChevronRight className="w-4 h-4 text-gray-400" />
-                      </td>
-                    </tr>
-                  </Link>
+                    project={project}
+                    detailsReady={detailsReady}
+                  />
                 );
               })}
             </tbody>

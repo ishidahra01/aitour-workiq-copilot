@@ -10,125 +10,26 @@ export const siteProjects: SiteProject[] = [
     owner: "中村さん",
     lastUpdated: "2026-03-12",
     summary: {
-      municipality:
-        "自治体との協議を進めている。一部制約事項あり、詳細確認中。",
-      design:
-        "RF設計条件を精査中。制約への対応方針は検討段階。",
-      issue:
-        "コストおよび設計に関する未解決論点が残っている。",
-      nextAction:
-        "関係者との情報整理後、次のアクションを決定する。",
+      municipality: "候補地として登録済み。自治体条件はまだ整理前。",
+      design: "現地確認前。設計に必要な前提情報を収集中。",
+      issue: "判断材料が不足しており、案件像がまだ粗い。",
+      nextAction: "関係者のメール・会話・資料を集めて案件情報を具体化する。",
     },
-    municipalityConstraints: {
-      heightLimitMeters: 20,
-      colorRestriction: "確認中",
-      residentMeetingStatus: "未実施（調整中）",
-      municipalityApprovalStatus: "協議中",
-    },
-    rfDesignConstraints: {
-      requiredAntennaHeightMeters: 20,
-      coverageAtAllowedHeightPercent: 85,
-      targetCoveragePercent: 95,
-      alternativeDesign: "検討中",
-      designStatus: "精査中",
-    },
-    openIssues: [
-      {
-        id: "issue-a-1",
-        title: "コスト見積もりの精査",
-        severity: "Medium",
-        status: "In Review",
-        owner: "中村さん",
-        note: "設計確定後に再見積もりが必要。コスト超過リスクを検討中。",
-      },
-      {
-        id: "issue-a-2",
-        title: "自治体との制約事項の確認",
-        severity: "Medium",
-        status: "Open",
-        owner: "中村さん",
-        note: "一部制約事項の詳細が未確認。自治体との協議を継続中。",
-      },
-    ],
-    approvals: [
-      {
-        id: "approval-a-1",
-        role: "自治体要件確認",
-        approver: "中村さん",
-        status: "Pending",
-      },
-      {
-        id: "approval-a-2",
-        role: "設計要件確認",
-        approver: "中村さん",
-        status: "Pending",
-      },
-      {
-        id: "approval-a-3",
-        role: "コスト判断",
-        approver: "PM",
-        status: "Pending",
-      },
-    ],
   },
   {
     id: "site-b",
     name: "B市駅前",
     municipality: "B市",
     location: "B市駅前広場 西口ロータリー付近",
-    status: "Approved",
+    status: "Approval Pending",
     owner: "佐藤さん",
     lastUpdated: "2026-03-01",
     summary: {
-      municipality:
-        "高さ制限なし。景観規制も対象外エリア。住民説明会・自治体承認ともに完了。",
-      design: "必要アンテナ高18mに対し制限なし。カバレッジ98%達成。設計確定済み。",
-      issue: "特に重大な未解決論点なし。",
-      nextAction: "施工準備フェーズへ移行。設備発注を開始。",
+      municipality: "駅前候補地として一次登録済み。詳細条件は未反映。",
+      design: "概略配置のイメージのみあり、RF条件は未整理。",
+      issue: "承認判断に必要な根拠がまだそろっていない。",
+      nextAction: "既存資料を確認し、関係者レビューの土台を作る。",
     },
-    municipalityConstraints: {
-      heightLimitMeters: 30,
-      colorRestriction: "特になし",
-      residentMeetingStatus: "実施済み（2026-01-15）",
-      municipalityApprovalStatus: "承認済み",
-    },
-    rfDesignConstraints: {
-      requiredAntennaHeightMeters: 18,
-      coverageAtAllowedHeightPercent: 98,
-      targetCoveragePercent: 95,
-      alternativeDesign: "不要",
-      designStatus: "設計確定",
-    },
-    openIssues: [
-      {
-        id: "issue-b-1",
-        title: "設備発注リードタイムの確認",
-        severity: "Low",
-        status: "In Review",
-        owner: "佐藤さん",
-        note: "施工スケジュールへの影響確認中。重大な問題なし。",
-      },
-    ],
-    approvals: [
-      {
-        id: "approval-b-1",
-        role: "自治体要件確認",
-        approver: "山田さん",
-        status: "Approved",
-      },
-      {
-        id: "approval-b-2",
-        role: "設計要件確認",
-        approver: "田中さん",
-        status: "Approved",
-      },
-      {
-        id: "approval-b-3",
-        role: "コスト判断",
-        approver: "PM",
-        status: "Approved",
-      },
-    ],
   },
   {
     id: "site-c",
@@ -139,72 +40,11 @@ export const siteProjects: SiteProject[] = [
     owner: "高橋さん",
     lastUpdated: "2026-03-10",
     summary: {
-      municipality:
-        "高さ制限12m・静穏地域指定あり。住民説明会は未実施。自治体との協議開始前。",
-      design:
-        "必要アンテナ高16mに対し制限12m。カバレッジ不足が懸念。設計代替案を検討中。",
-      issue: "住民説明会の日程調整が難航。設計・自治体の両方でPending事項が多い。",
-      nextAction: "住民説明会の日程確定後、自治体協議を開始する。",
+      municipality: "住宅街エリアの候補地として登録済み。制約情報は未整理。",
+      design: "設計検討の入口段階。比較に必要な材料が不足している。",
+      issue: "関連会話や現地情報が散在していて全体像が見えにくい。",
+      nextAction: "ヒアリング内容と過去資料を集約して初期案を固める。",
     },
-    municipalityConstraints: {
-      heightLimitMeters: 12,
-      colorRestriction: "目立つ色は不可（住宅街景観配慮）",
-      residentMeetingStatus: "未実施（日程調整中）",
-      municipalityApprovalStatus: "確認中",
-    },
-    rfDesignConstraints: {
-      requiredAntennaHeightMeters: 16,
-      coverageAtAllowedHeightPercent: 78,
-      targetCoveragePercent: 95,
-      alternativeDesign: "スモールセル3基 + リピーター設置案を検討中",
-      designStatus: "代替案検討中",
-    },
-    openIssues: [
-      {
-        id: "issue-c-1",
-        title: "住民説明会の日程未確定",
-        severity: "High",
-        status: "Blocked",
-        owner: "高橋さん",
-        note: "自治会との日程調整が難航。自治体協議の前提条件のため、ブロッカーとなっている。",
-      },
-      {
-        id: "issue-c-2",
-        title: "高さ制限12mでのカバレッジ不足（78%）",
-        severity: "High",
-        status: "Open",
-        owner: "設計チーム",
-        note: "目標95%に対し78%。代替設計の詳細試算が必要。",
-      },
-      {
-        id: "issue-c-3",
-        title: "スモールセル設置に伴う近隣同意取得",
-        severity: "Medium",
-        status: "Open",
-        owner: "高橋さん",
-        note: "複数箇所設置が必要なため、各地権者との交渉が発生する見込み。",
-      },
-    ],
-    approvals: [
-      {
-        id: "approval-c-1",
-        role: "自治体要件確認",
-        approver: "高橋さん",
-        status: "Pending",
-      },
-      {
-        id: "approval-c-2",
-        role: "設計要件確認",
-        approver: "伊藤さん",
-        status: "Pending",
-      },
-      {
-        id: "approval-c-3",
-        role: "コスト判断",
-        approver: "PM",
-        status: "Pending",
-      },
-    ],
   },
 ];
 
